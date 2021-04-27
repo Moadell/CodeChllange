@@ -1,72 +1,56 @@
-import React, { Component } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import {
      Card, CardTitle, CardText, Row, Col,Container
     
   } from 'reactstrap';
+export default({repo}) => {
+   const  {
+        name,
+        html_url,
+        description,
+        stargazers_count,
+        open_issues_count,
+        pushed_at,
+        owner
+    }= repo;
+    const {login,avatar_url}=owner;
 
-class Carrd extends Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-          data: [],
-          username:"",
-          skills:"",
-          courseName: "",
-        };
-      }
-      render(){
-        return (
-          <Container>
-        <Card body  style={{ backgroundColor: '#fff', borderColor: '#333' , margin:'20px 0' }}>
+    const GetDateInterval = push_date=>{
+      const dateDiff = new Date(Date.now() - Date.parse(push_date));
+      return Math.ceil(dateDiff / (1000 * 60 * 60 * 24));
+    }
+    const Optmize = number =>{
+        if(number>=1000)
+        number=(number/1000).toFixed(1).toString()+"K";
+        return number;
+    }
+    return (
+
+      <Card body onClick={() => {
+                                window.open(html_url);
+                            }}  style={{ backgroundColor: '#fff', borderColor: '#333' , margin:'20px 0' }}>
+        
         <Row>
             <Col style={{ maxWidth:"20%" }}>
                 
-            <img src="https://avatars.githubusercontent.com/u/37313564?v=4" alt = 'avatar' style={{ maxWidth:"-webkit-fill-available" }} />
+            <img src={avatar_url} alt = 'avatar' style={{ maxWidth:"-webkit-fill-available" }} />
             </Col>
             <Col>
-                  <CardTitle>Spiral-Up-Cut-Router-Bit </CardTitle>
-                  <CardText>1/4&quot; Spiral Up Cut Bits </CardText>
+                  <CardTitle>{name}</CardTitle>
+                  <CardText>{description}</CardText>
                   <Row>
               <Col style={{ maxWidth:"fit-content" }}>
-                   <CardTitle>426 Stars </CardTitle>
+                   <CardTitle>Stars: {Optmize(stargazers_count)} </CardTitle>
               </Col>
-              <CardText>0 Issues </CardText>
+              <CardText>Issues: {Optmize(open_issues_count)} </CardText>
               <Col>
-              <CardText>Created @ 2019-03-06 by MaslowCommunityGarden </CardText>
+              <CardText>submitted by {login} {GetDateInterval(pushed_at)} days ago</CardText>
               </Col>
                 </Row>
             </Col>      
-            </Row>
-                  
+            </Row>   
                 </Card>
-                <Card body  style={{ backgroundColor: '#fff', borderColor: '#333' , margin:'20px 0' }}>
-        <Row>
-            <Col style={{ maxWidth:"20%" }}>
-                
-            <img src="https://avatars.githubusercontent.com/u/37313564?v=4" alt = 'avatar' style={{ maxWidth:"-webkit-fill-available" }} />
-            </Col>
-            <Col>
-                  <CardTitle>Spiral-Up-Cut-Router-Bit </CardTitle>
-                  <CardText>1/4&quot; Spiral Up Cut Bits </CardText>
-                  <Row>
-              <Col style={{ maxWidth:"fit-content" }}>
-                   <CardTitle>426 Stars </CardTitle>
-              </Col>
-              <CardText>0 Issues </CardText>
-              <Col>
-              <CardText>Created @ 2019-03-06 by MaslowCommunityGarden </CardText>
-              </Col>
-                </Row>
-            </Col>      
-            </Row>
-                  
-                </Card>
-         </Container>
 
-
-
-        )}
-}
-export default Carrd;
+    );
+};
