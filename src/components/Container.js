@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from './card'
 import styled from "styled-components"
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 export const Wraper=styled.div`
     margin: 0 auto;
@@ -8,14 +9,18 @@ export const Wraper=styled.div`
     min-height:100vh;
 `; 
 
-export default ({repositories}) => {
+export default ({repositories,onPageChange}) => {
     
     return (
        <Wraper>
-      
+        <InfiniteScroll 
+            dataLength={repositories.length}
+            next={()=>onPageChange()}
+            hasMore={true}>
             {
              repositories.map((repo)=> <Card key={repo.id} repo={repo}/>)
             }
+        </InfiniteScroll>
        </Wraper>
     );
 } ;

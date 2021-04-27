@@ -20,21 +20,23 @@ function App() {
     return stringDate;
   }
 
-  
+  const Paginate = ()=>{
+    setPageIndex(pageIndex+1)
+  }
 
   const fetchData= async ()=>{
     const startdate=GenerateStarDate();
-    const API_REQUEST=`https://api.github.com/search/repositories?q=created:>${startdate}&sort=stars&order=desc`;
+    const API_REQUEST=`https://api.github.com/search/repositories?q=created:>${startdate}&sort=stars&order=desc&page=${pageIndex}`;
     const {data}= await axios.get(API_REQUEST);
     setData([...Data,...data.items]);
   }
 
   useEffect(() => {
-    fetchData();
+    fetchData();  
   }, [pageIndex]);
   
   return (
-    <Container repositories={Data} className="App"/>
+    <Container onPageChange={Paginate} repositories={Data} className="App"/>
   );
 }
 
