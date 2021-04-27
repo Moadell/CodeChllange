@@ -2,7 +2,11 @@
 This is the Gemography front-end code challnage
 
 # Start
-using npm install then npm start
+npm install 
+
+npm start
 
 # Demo
 using github pages
+
+https://moadell.github.io/CodeChllange/
